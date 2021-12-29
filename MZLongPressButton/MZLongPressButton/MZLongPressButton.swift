@@ -7,23 +7,23 @@
 
 import UIKit
 
-typealias MZLongPressCallback = () -> Void
+public typealias MZLongPressCallback = () -> Void
 
-class MZLongPressButton: UIButton {
+open class MZLongPressButton: UIButton {
     
     /// 长按起始时间，长按多久开始触发长按事件
-    var timeStart: TimeInterval = 0.5
+    public var timeStart: TimeInterval = 0.5
     
     /// 长按时间间隔，每隔多久触发一次长按事件
-    var timeGap: TimeInterval = 0.2
+    public var timeGap: TimeInterval = 0.2
     
     /// 长按事件回调，如果没触发长按，会触发一次点击事件
-    var longPress: MZLongPressCallback?
+    public var longPress: MZLongPressCallback?
     
     /// 是否开始长按
     private var hasLongPress: Bool = false
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
         initialize()
     }
@@ -65,10 +65,6 @@ class MZLongPressButton: UIButton {
     @objc private func touchUpCancel() {
         NSObject.cancelPreviousPerformRequests(withTarget: self)
         hasLongPress = false
-    }
-    
-    internal override func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
-        super.addTarget(target, action: action, for: controlEvents)
     }
 }
 
