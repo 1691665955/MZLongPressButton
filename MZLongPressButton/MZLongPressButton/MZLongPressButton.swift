@@ -25,15 +25,15 @@ open class MZLongPressButton: UIButton {
     
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
-        initialize()
+        setup()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initialize()
+        setup()
     }
     
-    private func initialize() {
+    private func setup() {
         addTarget(self, action: #selector(touchDown), for: .touchDown)
         addTarget(self, action: #selector(touchUpInside), for: .touchUpInside)
         addTarget(self, action: #selector(touchUpCancel), for: .touchCancel)
@@ -46,24 +46,20 @@ open class MZLongPressButton: UIButton {
     }
     
     @objc private func delayMethod() {
-        if longPress != nil {
-            longPress!()
-        }
+        self.longPress?()
         hasLongPress = true
         perform(#selector(delayMethod), with: nil, afterDelay: timeGap)
     }
     
     @objc private func touchUpInside() {
         if !hasLongPress {
-            if longPress != nil {
-                longPress!()
-            }
+            self.longPress?()
         }
         touchUpCancel()
     }
     
     @objc private func touchUpCancel() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(delayMethod), object: nil)
         hasLongPress = false
     }
 }

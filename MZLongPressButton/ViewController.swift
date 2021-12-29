@@ -64,7 +64,5 @@ class ViewController: UIViewController {
         otherBtn.timeGap = 1
         otherBtn.longPress = minusBtn.longPress
     }
-
-
 }
 
